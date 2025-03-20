@@ -10,6 +10,10 @@ export function corr(x: number[], y: number[]): number {
     throw new Error('X and Y must have the same length!');
   }
 
+  if (x.length < 2) {
+    throw new Error('X and Y must have at least 2 elements!');
+  }
+
   const n = x.length;
   let xTotal = 0,
     yTotal = 0,
