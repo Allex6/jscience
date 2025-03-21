@@ -1,3 +1,5 @@
+import { EULER } from './utils/euler';
+
 /**
  * Calculate the correlation coefficient between two arrays using the `Pearson correlation` formula.
  * @returns A number between -1 and 1, where:
@@ -133,7 +135,7 @@ export function standardize(x: number[]): number[] {
  */
 export function factorial(n: number): number {
   if (n < 0) {
-    throw new Error();
+    throw new Error('N cannot be negative!');
   }
 
   if (n <= 1) {
@@ -159,7 +161,7 @@ export function factorial(n: number): number {
  */
 export function binomial(n: number, k: number, p: number): number {
   if (k > n) {
-    throw new Error();
+    throw new Error('K cannot be greater than N!');
   }
 
   const n_diff_k = n - k;
@@ -167,4 +169,19 @@ export function binomial(n: number, k: number, p: number): number {
   const q = 1 - p;
 
   return coefficient * Math.pow(p, k) * Math.pow(q, n_diff_k);
+}
+
+/**
+ * Calculate the `Poisson probability` of a number of events occurring in a fixed interval of time
+ * @param lambda The average number of events per interval
+ * @param k The number of events to calculate the probability for
+ * @returns An approximation of the Poisson probability of the input parameters
+ * @throws An error if the number of events is negative.
+ */
+export function poisson(lambda: number, k: number): number {
+  if (k < 0) {
+    throw new Error('K cannot be negative!');
+  }
+
+  return (Math.pow(EULER, -lambda) * Math.pow(lambda, k)) / factorial(k);
 }
