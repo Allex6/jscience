@@ -185,3 +185,52 @@ export function poisson(lambda: number, k: number): number {
 
   return (Math.pow(EULER, -lambda) * Math.pow(lambda, k)) / factorial(k);
 }
+
+/**
+ * Encode categorical columns in a dataset using the `one-hot encoding` technique.
+ * @param rows An array of objects representing the dataset
+ * @param columns An array of column names to encode
+ * @returns An object containing the encoded dataset and the new column names
+ * @throws An error if the input dataset is empty or if the input columns are not present in the dataset.
+ */
+export function oneHotEncoding(
+  rows: any[],
+  columns: string[]
+): { rows: any[]; columns: string[] } {
+  const columnValues = new Map<string, Set<any>>();
+
+  // Collects all unique values for each column
+  for (const row of rows) {
+    for (const column of columns) {
+      if (!columnValues.has(column)) {
+        columnValues.set(column, new Set());
+      }
+      if (row[column] !== undefined) {
+        columnValues.get(column)!.add(row[column]);
+      }
+    }
+  }
+
+  // Creates new columns for each unique value in each column
+  const newColumns: string[] = [];
+  const columnMapping = new Map<string, { column: string; value: any }>();
+
+  for (const column of columns) {
+    for (const value of columnValues.get(column)!) {
+      const newColumnName = `${column}_${value}`;
+      newColumns.push(newColumnName);
+      columnMapping.set(newColumnName, { column, value });
+    }
+  }
+
+  // Encodes the rows using the new columns
+  const encodedRows = rows.map((row) => {
+    for (const newColumn of newColumns) {
+      const { column: originalColumn, value } = columnMapping.get(newColumn)!;
+      row[newColumn] = row[originalColumn] === value ? 1 : 0;
+    }
+    return row;
+  });
+
+  return { rows: encodedRows, columns: newColumns };
+}
