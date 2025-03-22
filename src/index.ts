@@ -1,4 +1,4 @@
-import { EULER } from './utils/euler';
+import { EULER } from './utils/constants';
 
 /**
  * Calculate the correlation coefficient between two arrays using the `Pearson correlation` formula.
