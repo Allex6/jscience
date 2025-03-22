@@ -42,7 +42,7 @@ z = (x - μ) / σ
 
 ### Binomial Probability
 
-Binomial probability calculates the chance of `k` successes in `n` trials:
+Binomial probability calculates the chance of `k` successes in `n` trials given a probability `p`:
 
 ```
 P(X = k) = (n choose k) * pᵏ * (1-p)ⁿ⁻ᵏ
@@ -50,7 +50,7 @@ P(X = k) = (n choose k) * pᵏ * (1-p)ⁿ⁻ᵏ
 
 ### Poisson Probability
 
-The Poisson distribution estimates the probability of `k` events in a fixed interval:
+The Poisson distribution estimates the probability of `k` events in a fixed interval of time given a mean `λ`:
 
 ```
 P(X = k) = (e⁻ˡ * λᵏ) / k!
