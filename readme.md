@@ -66,12 +66,6 @@ Install the library via npm:
 npm install jscience
 ```
 
-Or use it directly in the browser:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/jscience"></script>
-```
-
 ---
 
 ## 🛠️ Getting Started
