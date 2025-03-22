@@ -187,6 +187,22 @@ export function poisson(lambda: number, k: number): number {
 }
 
 /**
+ * Get the unique values of a column in a dataset
+ * @param rows The dataset
+ * @param column The column to get the unique values for
+ * @returns An array of unique values in the column
+ */
+export function getColumnValues(rows: any[], column: string): any[] {
+  const values = new Set<any>();
+  for (const row of rows) {
+    if (row[column] !== undefined) {
+      values.add(row[column]);
+    }
+  }
+  return Array.from(values);
+}
+
+/**
  * Encode categorical columns in a dataset using the `one-hot encoding` technique.
  * @param rows An array of objects representing the dataset
  * @param columns An array of column names to encode
@@ -197,30 +213,16 @@ export function poisson(lambda: number, k: number): number {
 export function oneHotEncoding(
   rows: any[],
   columns: string[],
-  dropLast: boolean = false
+  dropFirst = true
 ): { rows: any[]; columns: string[] } {
-  const columnValues = new Map<string, Set<any>>();
-
-  // Collects all unique values for each column
-  for (const row of rows) {
-    for (const column of columns) {
-      if (!columnValues.has(column)) {
-        columnValues.set(column, new Set());
-      }
-      if (row[column] !== undefined) {
-        columnValues.get(column)!.add(row[column]);
-      }
-    }
-  }
-
-  // Creates new columns for each unique value in each column
   const newColumns: string[] = [];
   const columnMapping = new Map<string, { column: string; value: any }>();
 
+  // Creates new columns based on the unique values in the original columns
   for (const column of columns) {
-    const values = Array.from(columnValues.get(column)!);
-    if (dropLast) {
-      values.pop();
+    const values = getColumnValues(rows, column);
+    if (dropFirst) {
+      values.shift();
     }
     for (const value of values) {
       const newColumnName = `${column}_${value}`;
@@ -243,4 +245,36 @@ export function oneHotEncoding(
   });
 
   return { rows: encodedRows, columns: newColumns };
+}
+
+/**
+ * Encode categorical columns in a dataset using the `label encoding` technique.
+ * @param rows The dataset
+ * @param columns The columns to encode
+ * @returns An object containing the encoded dataset and the mappings used for encoding
+ */
+export function labelEncoding(
+  rows: any[],
+  columns: string[]
+): { rows: any[]; mappings: Record<string, Record<any, number>> } {
+  const mappings: Record<string, Record<any, number>> = {};
+
+  for (const column of columns) {
+    const values = getColumnValues(rows, column);
+    mappings[column] = {};
+    for (let i = 0; i < values.length; i++) {
+      mappings[column][values[i]] = i;
+    }
+  }
+
+  const encodedRows = rows.map((row) => {
+    for (const column of columns) {
+      if (row[column] !== undefined) {
+        row[column] = mappings[column][row[column]];
+      }
+    }
+    return row;
+  });
+
+  return { rows: encodedRows, mappings };
 }
