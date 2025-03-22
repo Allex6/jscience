@@ -4,6 +4,19 @@
 
 ---
 
+## ⚠️ Precision Limitations
+
+JavaScript uses the IEEE 754 standard for representing floating-point numbers, which introduces limitations in the precision of calculations involving very large numbers or numbers with many decimal places. This means:
+
+- Mathematical operations may result in small rounding errors.
+- Calculations involving extremely large or small numbers may lose precision.
+
+While **JScience** is designed to provide accurate results for most use cases, it is important to be aware of these limitations when working with precision-sensitive data.
+
+For more details, refer to the [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754).
+
+---
+
 ## 🚀 Key Features
 
 - **Statistics**: Calculate mean, standard deviation, correlation, and more.
