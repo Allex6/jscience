@@ -33,41 +33,75 @@ For more details, refer to the [IEEE 754 standard](https://en.wikipedia.org/wiki
 
 Pearson correlation measures the linear relationship between two variables. The formula is:
 
-```
-r = Σ((xᵢ - x̄)(yᵢ - ȳ)) / √(Σ(xᵢ - x̄)² * Σ(yᵢ - ȳ)²)
-```
+$$
+r = \frac{\Sigma((xᵢ - \bar{x})(yᵢ - \bar{y}))}{\sqrt{\Sigma(xᵢ - \bar{x})² \cdot \Sigma(yᵢ - \bar{y})²}}
+$$
+
+Wheter `r` is close to `1`, it indicates a strong positive linear relationship. If `r` is close to `-1`, it indicates a strong negative linear relationship.
+
+Where:
+
+- `xᵢ` and `yᵢ`: Data points.
+- $\bar{x}$ and $\bar{y}$: Mean of `x` and `y`.
 
 ### Min-Max Normalization
 
 Min-max normalization scales the values of a dataset to the range `[0, 1]`:
 
-```
-x' = (x - min(x)) / (max(x) - min(x))
-```
+$$
+x' = \frac{x - \min(x)}{\max(x) - \min(x)}
+$$
+
+Where:
+
+- `x`: Original value.
+- `x'`: Normalized value.
+- `min(x)`: Minimum value in the dataset.
+- `max(x)`: Maximum value in the dataset.
 
 ### Z-Score
 
 The z-score measures how many standard deviations a value is from the mean:
 
-```
-z = (x - μ) / σ
-```
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+Where:
+
+- `x`: Original value.
+- `μ`: Mean of the dataset.
+- `σ`: Standard deviation of the dataset.
 
 ### Binomial Probability
 
 Binomial probability calculates the chance of `k` successes in `n` trials given a probability `p`:
 
-```
-P(X = k) = (n choose k) * pᵏ * (1-p)ⁿ⁻ᵏ
-```
+$$
+P(X = k) = \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k}
+$$
+
+Where:
+
+- `n`: Number of trials.
+- `k`: Number of successes.
+- `p`: Probability of success on each trial.
+- $\binom{n}{k}$: Binomial coefficient.
 
 ### Poisson Probability
 
 The Poisson distribution estimates the probability of `k` events in a fixed interval of time given a mean `λ`:
 
-```
-P(X = k) = (e⁻ˡ * λᵏ) / k!
-```
+$$
+P(X = k) = \frac{e^{-λ} \cdot λ^k}{k!}
+$$
+
+Where:
+
+- `λ`: Mean number of events.
+- `k`: Number of events.
+- `e`: Euler's number.
+- `k!`: Factorial of `k`.
 
 ---
 
@@ -121,7 +155,7 @@ console.log(minMax(data)); // [0, 0.5, 1]
 ```typescript
 import { binomial } from 'jscience';
 
-console.log(binomial(10, 3, 0.5)); // Probability of 3 successes in 10 trials
+console.log(binomial(10, 3, 0.5)); // Probability of 3 successes in 10 trials with p = 0.5
 ```
 
 ### 4. **Poisson Probability**
