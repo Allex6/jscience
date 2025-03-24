@@ -13,6 +13,10 @@ export function oneHotEncoding(
   columns: string[],
   dropFirst = true
 ): { rows: any[]; columns: string[] } {
+  if (rows.length === 0) {
+    throw new Error('The input dataset is empty');
+  }
+
   const newColumns: string[] = [];
   const columnMapping = new Map<string, { column: string; value: any }>();
 

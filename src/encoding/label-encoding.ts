@@ -10,6 +10,10 @@ export function labelEncoding(
   rows: any[],
   columns: string[]
 ): { rows: any[]; mappings: Record<string, Record<any, number>> } {
+  if (rows.length === 0) {
+    throw new Error('The input dataset is empty');
+  }
+
   const mappings: Record<string, Record<any, number>> = {};
 
   for (const column of columns) {
