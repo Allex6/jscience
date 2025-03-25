@@ -1,0 +1,7 @@
+node_modules
+
+# Tests related files
+tests
+coverage
+
+src
