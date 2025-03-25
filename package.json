@@ -1,26 +1,43 @@
 {
   "name": "jscience",
+  "description": "JScience offers essential functionalities for statistical calculations, data normalization, categorical column encoding, and much more.",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Allex6/jscience.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "statistics",
+    "math",
+    "mathematics",
+    "data normalization",
+    "categorical column encoding",
+    "one-hot encoding",
+    "label encoding",
+    "data transformation",
+    "data preprocessing",
+    "data science",
+    "data analysis",
+    "data cleaning"
+  ],
+  "author": "Alex Souza <alex.webdevelloper@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Allex6/jscience/issues"
   },
   "homepage": "https://github.com/Allex6/jscience#readme",
-  "description": "",
   "devDependencies": {
+    "@vitest/coverage-v8": "^3.0.9",
     "eslint": "^9.22.0",
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
   }
 }
