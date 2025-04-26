@@ -4,16 +4,18 @@
 
 ---
 
-## ⚠️ Precision Limitations
+## ⚠️ Numerical Precision Considerations
 
-JavaScript uses the IEEE 754 standard for representing floating-point numbers, which introduces limitations in the precision of calculations involving very large numbers or numbers with many decimal places. This means:
+JavaScript natively uses the IEEE 754 standard for floating-point numbers, which can lead to small rounding errors in arithmetic operations.
 
-- Mathematical operations may result in small rounding errors.
-- Calculations involving extremely large or small numbers may lose precision.
+To mitigate this in sensitive calculations (such as probability distributions and combinatorial operations), **JScience** internally uses the `Decimal.js` library, which offers arbitrary-precision decimal arithmetic.
 
-While **JScience** is designed to provide accurate results for most use cases, it is important to be aware of these limitations when working with precision-sensitive data.
+However, it's important to be aware that:
 
-For more details, refer to the [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754).
+- Converting to and from JavaScript's standard `Number` type when interacting with the library or other parts of your code can introduce precision limitations.
+- Operations performed outside of JScience functions that utilize `Decimal.js` will still be subject to IEEE 754 behavior.
+
+Caution is advised when working with data requiring very high precision, especially when converting between numeric types. For more details on JavaScript's native standard, refer to [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754).
 
 ---
 

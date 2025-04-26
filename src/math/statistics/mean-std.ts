@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 /**
  * Calculate the `mean` of an array of numbers.
  * @returns The mean of the input array.
@@ -8,7 +10,11 @@ export function mean(x: number[]): number {
     throw new Error('X must have at least one value!');
   }
 
-  return x.reduce((sum, value) => sum + value, 0) / x.length;
+  return new Decimal(
+    x.reduce((sum, value) => new Decimal(sum).plus(value).toNumber(), 0)
+  )
+    .div(x.length)
+    .toNumber();
 }
 
 /**
@@ -23,8 +29,12 @@ export function std(x: number[]): number {
 
   const _mean = mean(x);
 
-  const variance =
-    x.reduce((sum, value) => sum + Math.pow(value - _mean, 2), 0) / x.length;
+  const variance = new Decimal(
+    x.reduce(
+      (sum, value) => sum.plus(new Decimal(value).minus(_mean).pow(2)),
+      new Decimal(0)
+    )
+  ).div(x.length);
 
-  return Math.sqrt(variance);
+  return variance.sqrt().toNumber();
 }

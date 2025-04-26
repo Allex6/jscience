@@ -1,7 +1,7 @@
 {
   "name": "jscience",
   "description": "JScience offers essential functionalities for statistical calculations, data normalization, categorical column encoding, and much more.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -39,5 +39,8 @@
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
+  },
+  "dependencies": {
+    "decimal.js": "^10.5.0"
   }
 }

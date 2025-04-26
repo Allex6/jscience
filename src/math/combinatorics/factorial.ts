@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 /**
  * Calculates the factorial of a number
  * @param n The number to calculate the factorial for
@@ -13,11 +15,11 @@ export function factorial(n: number): number {
     return 1;
   }
 
-  let total = n;
+  let total = new Decimal(n);
 
   for (let i = n - 1; i > 0; i--) {
-    total *= i;
+    total = total.mul(i);
   }
 
-  return total;
+  return total.toNumber();
 }
