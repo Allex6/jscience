@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js';
 import { factorial } from '../combinatorics/factorial';
 import { EULER } from '../utils/constants';
 
@@ -14,11 +15,16 @@ export function binomial(n: number, k: number, p: number): number {
     throw new Error('K cannot be greater than N!');
   }
 
-  const n_diff_k = n - k;
-  const coefficient = factorial(n) / (factorial(k) * factorial(n_diff_k));
-  const q = 1 - p;
+  const n_diff_k = new Decimal(n).minus(k).toNumber();
+  const coefficient = new Decimal(factorial(n)).div(
+    new Decimal(factorial(k)).mul(factorial(n_diff_k))
+  );
+  const q = new Decimal(1).minus(p).toNumber();
 
-  return coefficient * Math.pow(p, k) * Math.pow(q, n_diff_k);
+  return coefficient
+    .mul(new Decimal(p).pow(k))
+    .mul(new Decimal(q).pow(n_diff_k))
+    .toNumber();
 }
 
 /**
@@ -33,5 +39,14 @@ export function poisson(lambda: number, k: number): number {
     throw new Error('K cannot be negative!');
   }
 
-  return (Math.pow(EULER, -lambda) * Math.pow(lambda, k)) / factorial(k);
+  const decimalLambda = new Decimal(lambda);
+  const decimalK = new Decimal(k);
+  const decimalE = new Decimal(EULER);
+  const factorialK = factorial(k);
+
+  return decimalE
+    .pow(-decimalLambda.toNumber())
+    .mul(decimalLambda.pow(decimalK.toNumber()))
+    .div(factorialK)
+    .toNumber();
 }

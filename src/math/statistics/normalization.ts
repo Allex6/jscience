@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 /**
  * Normalize an array of numbers using the `min-max normalization` technique.
  * @returns An array of numbers between 0 and 1.
@@ -15,5 +17,13 @@ export function minMax(x: number[]): number[] {
     throw new Error('All values in X are identical!');
   }
 
-  return x.map((curr) => (curr - min) / (max - min));
+  return x.map((curr) => {
+    const minDecimal = new Decimal(min);
+    const maxDecimal = new Decimal(max);
+    const currDecimal = new Decimal(curr);
+    return currDecimal
+      .minus(minDecimal)
+      .div(maxDecimal.minus(minDecimal))
+      .toNumber();
+  });
 }

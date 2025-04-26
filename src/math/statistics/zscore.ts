@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js';
 import { mean, std } from './mean-std';
 
 /**
@@ -8,7 +9,7 @@ import { mean, std } from './mean-std';
  * @returns The z-score of the input number
  */
 export function zScore(x: number, mean: number, std: number): number {
-  return (x - mean) / std;
+  return new Decimal(x).minus(mean).div(std).toNumber();
 }
 
 /**
@@ -21,12 +22,12 @@ export function standardize(x: number[]): number[] {
     throw new Error('X must have at least 2 values!');
   }
 
-  const _mean = mean(x);
-  const _std = std(x);
+  const _mean = new Decimal(mean(x));
+  const _std = new Decimal(std(x));
 
-  if (_std === 0) {
+  if (_std.isZero()) {
     throw new Error('Standard deviation cannot be zero!');
   }
 
-  return x.map((val) => zScore(val, _mean, _std));
+  return x.map((val) => zScore(val, _mean.toNumber(), _std.toNumber()));
 }

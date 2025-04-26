@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 /**
  * Calculate the correlation coefficient between two arrays using the `Pearson correlation` formula.
  * @returns A number between -1 and 1, where:
@@ -16,29 +18,29 @@ export function corr(x: number[], y: number[]): number {
   }
 
   const n = x.length;
-  let xTotal = 0,
-    yTotal = 0,
-    numerator = 0,
-    xSquareSum = 0,
-    ySquareSum = 0;
+  let xTotal = new Decimal(0),
+    yTotal = new Decimal(0),
+    numerator = new Decimal(0),
+    xSquareSum = new Decimal(0),
+    ySquareSum = new Decimal(0);
 
   for (let i = 0; i < n; i++) {
-    xTotal += x[i];
-    yTotal += y[i];
+    xTotal = xTotal.plus(x[i]);
+    yTotal = yTotal.plus(y[i]);
   }
 
-  const xMean = xTotal / n;
-  const yMean = yTotal / n;
+  const xMean = xTotal.div(n);
+  const yMean = yTotal.div(n);
 
   for (let i = 0; i < n; i++) {
-    const xDiff = x[i] - xMean;
-    const yDiff = y[i] - yMean;
+    const xDiff = x[i] - xMean.toNumber();
+    const yDiff = y[i] - yMean.toNumber();
 
-    numerator += xDiff * yDiff;
-    xSquareSum += xDiff * xDiff;
-    ySquareSum += yDiff * yDiff;
+    numerator = numerator.plus(xDiff * yDiff);
+    xSquareSum = xSquareSum.plus(xDiff * xDiff);
+    ySquareSum = ySquareSum.plus(yDiff * yDiff);
   }
 
-  const denominator = Math.sqrt(xSquareSum * ySquareSum);
-  return numerator / denominator;
+  const denominator = xSquareSum.sqrt().times(ySquareSum.sqrt());
+  return numerator.div(denominator).toNumber();
 }
